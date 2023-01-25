@@ -1,17 +1,14 @@
-//Load HTTP module
-const http = require("http");
-const hostname = "127.0.0.1";
 const port = 3000;
+const express = require('express');
+const app = express();
+require('./db/config');
+const User = require('./src/controllers/UserController');
+const bodyParser = require('body-parser')
 
-//Create HTTP server and listen on port 3000 for requests
-const server = http.createServer((req, res) => {
-  //Set the response HTTP header with HTTP status and Content type
-  res.statusCode = 200;
-  res.setHeader("Content-Type", "text/plain");
-  res.end("Hello World\n");
-});
+app.use(bodyParser.json());
 
-//listen for request on port 3000, and as a callback function have the port listened on logged
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
+app.post('/register',User.createUser);
+
+app.post('/login',User.loginUser);
+
+app.listen(port);

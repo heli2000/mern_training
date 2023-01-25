@@ -172,6 +172,10 @@ iframe {
     z-index: 1
 }
 
+.container-login100.bgimg {
+    background-image: url('../Images/bg-01.jpg');
+}
+
 .container-login100::before {
     content: "";
     display: block;
