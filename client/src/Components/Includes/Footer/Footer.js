@@ -8,12 +8,12 @@ import Swal from "sweetalert2";
 export const Footer = () => {
   return (
     <footer>
-      <div class="f-item-con">
-        <div class="app-info">
+      <div className="f-item-con">
+        <div className="app-info">
           <img src={MernImg} className="menu-img" />
         </div>
-        <div class="g-i-t">
-          <div class="footer-title">Get in Touch</div>
+        <div className="g-i-t">
+          <div className="footer-title">Get in Touch</div>
 
           <Formik
             initialValues={{ email: "", message: "" }}
@@ -44,7 +44,7 @@ export const Footer = () => {
                 />
                 <span className="focus-input100" />
               </div>
-              <span class="error">
+              <span className="error">
                 <ErrorMessage name="email" />
               </span>
               <div
@@ -59,7 +59,7 @@ export const Footer = () => {
                 />
                 <span className="focus-input100" />
               </div>
-              <span class="error">
+              <span className="error">
                 <ErrorMessage name="message" />
               </span>
               <div className="container-login100-form-btn">
@@ -71,7 +71,7 @@ export const Footer = () => {
           </Formik>
         </div>
       </div>
-      <div class="cr-con">Copyright &copy; 2023 | Made by Covrize</div>
+      <div className="cr-con">Copyright &copy; 2023 | Made by Covrize</div>
     </footer>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../../../CSS/Menu.css";
 import { UserLoginContext } from "../../Provider/UserLoginProvider";
 import { Logout } from "../../User/Logout";
@@ -10,7 +10,7 @@ export const Menu = () => {
   
   return (
     <>
-      <ul class="menu-items">
+      <ul className="menu-items">
         <img src={MernImg} className="menu-img"/>
         <li><Link to="/">Home</Link></li>
         {state.user.name === null ? <li><Link to="/login">Login</Link></li> :<Logout/>}
