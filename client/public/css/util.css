@@ -9732,3 +9732,6 @@
     right: 0;
     bottom: 0
 }
+form span.error {
+    color:red
+}
