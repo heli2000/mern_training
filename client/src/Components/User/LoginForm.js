@@ -1,19 +1,14 @@
 import React, { useContext } from "react";
-import { Formik, Field, Form } from "formik";
+import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { UserLoginContext } from "../Provider/UserLoginProvider";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const LoginForm = () => {
-
   const [state, dispatch] = useContext(UserLoginContext);
   const navigate = useNavigate();
-
-  // if(state.user.name === null){
-  //   return <Navigate to='/'/>
-  // }
 
   return (
     <div>
@@ -42,12 +37,12 @@ export const LoginForm = () => {
                 if (Object.keys(data).length > 1) {
                   dispatch({
                     type: "updateUserLoginInfo",
-                    payload: {user: {...data.userData[0]}}
+                    payload: { user: { ...data.userData[0] } },
                   });
                 } else {
                   Swal.fire("", data.message, "error");
                 }
-                navigate("/")
+                navigate("/");
               } catch (e) {
                 console.log(e);
               }
@@ -70,6 +65,9 @@ export const LoginForm = () => {
                   <ErrorMessage name="name" />
                 </span> */}
               </div>
+              <span className="error">
+                <ErrorMessage name="name" />
+              </span>
               <div
                 className="wrap-input100 validate-input m-b-25"
                 data-validate="Enter password"
@@ -85,15 +83,18 @@ export const LoginForm = () => {
                   <ErrorMessage name="pass" />
                 </span> */}
               </div>
+              <span className="error">
+                <ErrorMessage name="pass" />
+              </span>
               <div className="container-login100-form-btn">
                 <button className="login100-form-btn" type="submit">
                   Sign In
                 </button>
               </div>
               <div className="text-center">
-                <a href="/" className="txt2 hov1">
+                <Link to="/register" className="txt2 hov1">
                   Sign Up
-                </a>
+                </Link>
               </div>
             </Form>
           </Formik>
