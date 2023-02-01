@@ -43,7 +43,6 @@ const editUser = async (req, res) => {
       { _id: req.body.id },
       { $set: { name: req.body.name } }
     );
-    console.log(update);
     if (update.acknowledged) {
       res.send({ message: "User Updated successfully" });
     } else {
@@ -54,9 +53,25 @@ const editUser = async (req, res) => {
   }
 };
 
+const deleteUser = async (req,res) => {
+  try{
+    let deleteU = await User.deleteOne({
+      _id:req.body.id
+    });
+    if(deleteU.deletedCount === 1){
+      res.send({ message: "User Deleted successfully" });
+    }else{
+      res.send({ error: "Something went wrong" });
+    }
+  }catch(error){
+    res.send(error.message);
+  }
+}
+
 module.exports = {
   createUser,
   loginUser,
   listUsers,
   editUser,
+  deleteUser
 };

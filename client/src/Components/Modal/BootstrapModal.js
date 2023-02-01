@@ -18,7 +18,7 @@ export const BootstrapModal = (props) => {
       <Modal show={show} onHide={handleModal} className="all-modal">
         <Modal.Header closeButton>{props.title}</Modal.Header>
         <Modal.Body>{props.children}</Modal.Body>
-        <Modal.Footer>from footer</Modal.Footer>
+        <Modal.Footer>{props.footer}</Modal.Footer>
       </Modal>
     </>
   );
