@@ -17,7 +17,13 @@ export const ListUser = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       const fetch = await axios.get(
-        `${process.env.REACT_APP_API_URL}listUser?id=${state.user._id}`
+        `${process.env.REACT_APP_API_URL}listUser?id=${state.user._id}`,
+        {
+          withCredentials: true,
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      }
       );
       const data = await fetch.data.UserData;
       setUserList(data);

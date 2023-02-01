@@ -10,9 +10,9 @@ export const LoginForm = () => {
   const [state, dispatch] = useContext(UserLoginContext);
   const navigate = useNavigate();
 
-  if(state.user._id !== null){
-    return <Navigate to="/"/>
-  }
+  // if(state.user._id !== null){
+  //   return <Navigate to="/"/>
+  // }
 
   return (
     <div>
@@ -31,14 +31,19 @@ export const LoginForm = () => {
                   `${process.env.REACT_APP_API_URL}login`,
                   JSON.stringify({ ...values }),
                   {
+                    withCredentials: true,
                     headers: {
                       "Content-Type": "application/json",
                       "Access-Control-Allow-Origin": "*",
                     },
-                  }
+                  },
+                  // {
+                  //   withCredentials: true,
+                  // }
                 );
+                
                 const data = await fetch.data;
-
+                // console.log(Cookies.get('mernsession'));
                 if (Object.keys(data).length > 1) {
                   dispatch({
                     type: "updateUserLoginInfo",

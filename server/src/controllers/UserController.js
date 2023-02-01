@@ -19,7 +19,12 @@ const loginUser = async (req, res) => {
   try {
     let result = await User.find(req.body);
     if (result.length > 0) {
-      res.send({ message: "Login successfully", userData: { ...result } });
+      if (req.session.user !== undefined) {
+        res.send({ message: "You are already logged in" });
+      } else {
+        req.session.user = req.body.name;
+        res.send({ message: "Login successfully", userData: { ...result } });
+      }
     } else {
       res.send({ message: "Username or password is incorrect" });
     }
@@ -30,8 +35,13 @@ const loginUser = async (req, res) => {
 
 const listUsers = async (req, res) => {
   try {
-    let result = await User.find({ _id: { $ne: req.query.id } });
-    res.send({ UserData: result });
+    console.log(req.session);
+    if (req.session.user === undefined) {
+      res.send({ message: "access denied" });
+    } else {
+      let result = await User.find({ _id: { $ne: req.query.id } });
+      res.send({ UserData: result });
+    }
   } catch (error) {
     res.send(error.message);
   }
@@ -53,25 +63,36 @@ const editUser = async (req, res) => {
   }
 };
 
-const deleteUser = async (req,res) => {
-  try{
+const deleteUser = async (req, res) => {
+  try {
     let deleteU = await User.deleteOne({
-      _id:req.body.id
+      _id: req.body.id,
     });
-    if(deleteU.deletedCount === 1){
+    if (deleteU.deletedCount === 1) {
       res.send({ message: "User Deleted successfully" });
-    }else{
+    } else {
       res.send({ error: "Something went wrong" });
     }
-  }catch(error){
+  } catch (error) {
     res.send(error.message);
   }
-}
+};
+
+const logoutUser = (req, res) => {
+  if (req.session.user) {
+    req.session.destroy();
+    res.clearCookie("mernsession");
+    res.send({ message: "user Logged out" });
+  } else {
+    res.send({ message: "no login information found for this user" });
+  }
+};
 
 module.exports = {
   createUser,
   loginUser,
   listUsers,
   editUser,
-  deleteUser
+  deleteUser,
+  logoutUser,
 };
