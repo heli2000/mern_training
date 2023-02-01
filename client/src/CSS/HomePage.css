@@ -1,3 +1,6 @@
 .home-page-carousel img {
     height: 600px;
 }
+.user-operation button {
+    margin: 5px;
+}

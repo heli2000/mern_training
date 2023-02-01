@@ -4,14 +4,19 @@ import * as Yup from "yup";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { UserLoginContext } from "../Provider/UserLoginProvider";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 export const LoginForm = () => {
   const [state, dispatch] = useContext(UserLoginContext);
   const navigate = useNavigate();
 
+  if(state.user._id !== null){
+    return <Navigate to="/"/>
+  }
+
   return (
     <div>
+      {/* {JSON.stringify(state)} */}
       <div className="container-login100 bgimg">
         <div className="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30">
           <Formik

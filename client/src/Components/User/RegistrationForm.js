@@ -8,9 +8,12 @@ import { UserLoginContext } from "../Provider/UserLoginProvider";
 import { Navigate, useNavigate } from "react-router-dom";
 
 export const RegistrationForm = () => {
-
-  const [state, dispatch] = useContext(UserLoginContext);
+  const [state] = useContext(UserLoginContext);
   const navigate = useNavigate();
+
+  if (state.user._id !== null) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div>
@@ -42,15 +45,6 @@ export const RegistrationForm = () => {
                   }
                 );
                 const data = await fetch.data;
-                //   console.log(data);
-                // if (Object.keys(data).length > 1) {
-                //   dispatch({
-                //     type: "updateUserLoginInfo",
-                //     payload: { user: { ...data.userData[0] } },
-                //   });
-                // } else {
-                //   Swal.fire("", data.message, "error");
-                // }
                 Swal.fire("", data.message, "success");
                 navigate("/");
               } catch (e) {
@@ -58,7 +52,7 @@ export const RegistrationForm = () => {
               }
             }}
           >
-            {({ values, errors, handleSubmit, handleChange, handleBlur }) => {
+            {({ values, handleChange, handleBlur }) => {
               return (
                 <Form className="login100-form validate-form">
                   <span className="login100-form-title p-b-37">Sign Up</span>
@@ -76,9 +70,6 @@ export const RegistrationForm = () => {
                       onChange={handleChange}
                     />
                     <span className="focus-input100" />
-                    {/* <span>
-                  <ErrorMessage name="name" />
-                </span> */}
                   </div>
                   <span className="error">
                     <ErrorMessage name="name" />
@@ -97,9 +88,6 @@ export const RegistrationForm = () => {
                       onChange={handleChange}
                     />
                     <span className="focus-input100" />
-                    {/* <span>
-                  <ErrorMessage name="pass" />
-                </span> */}
                   </div>
                   <span className="error">
                     <ErrorMessage name="pass" />
@@ -118,9 +106,6 @@ export const RegistrationForm = () => {
                       onChange={handleChange}
                     />
                     <span className="focus-input100" />
-                    {/* <span>
-                  <ErrorMessage name="pass" />
-                </span> */}
                   </div>
                   <span className="error">
                     <ErrorMessage name="cpass" />

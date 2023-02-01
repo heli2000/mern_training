@@ -16,4 +16,8 @@ app.post('/register',User.createUser);
 
 app.post('/login',User.loginUser);
 
+app.get('/listUser',User.listUsers);
+
+app.post('/editUser',User.editUser)
+
 app.listen(port);
