@@ -52,7 +52,6 @@ export const LoginForm = () => {
                 } else {
                   Swal.fire("", data.message, "error");
                 }
-                navigate("/");
               } catch (e) {
                 console.log(e);
               }

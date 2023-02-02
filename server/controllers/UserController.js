@@ -19,7 +19,7 @@ const loginUser = async (req, res) => {
   try {
     let result = await User.find(req.body);
     if (result.length > 0) {
-      if (req.session.user !== undefined) {
+      if (req.session !== undefined && req.session.user !== undefined) {
         res.send({ message: "You are already logged in" });
       } else {
         req.session.user = req.body.name;
@@ -35,13 +35,8 @@ const loginUser = async (req, res) => {
 
 const listUsers = async (req, res) => {
   try {
-    console.log(req.session);
-    if (req.session.user === undefined) {
-      res.send({ message: "access denied" });
-    } else {
       let result = await User.find({ _id: { $ne: req.query.id } });
       res.send({ UserData: result });
-    }
   } catch (error) {
     res.send(error.message);
   }

@@ -1,12 +1,11 @@
 const port = 3000;
 const express = require("express");
 const app = express();
-require("./db/config");
-const User = require("./src/controllers/UserController");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const session = require("express-session");
 var cookieParser = require('cookie-parser');
+var LoginRoutes = require('./routes/userRouter');
 
 app.use(
   cors({
@@ -32,16 +31,6 @@ app.set("trust proxy", 1);
 
 app.use(bodyParser.json());
 
-app.post("/register", User.createUser);
-
-app.post("/login", User.loginUser);
-
-app.get("/listUser", User.listUsers);
-
-app.post("/editUser", User.editUser);
-
-app.post("/deleteUser", User.deleteUser);
-
-app.get("/logout", User.logoutUser);
+app.use(LoginRoutes);
 
 app.listen(port);
