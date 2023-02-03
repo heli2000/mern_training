@@ -6,6 +6,7 @@ import { Button } from "react-bootstrap";
 import { BootstrapModal } from "../Modal/BootstrapModal";
 import { UpdateUser } from "./UpdateUser";
 import { DeleteUser } from "./DeleteUser";
+import { Navigate } from "react-router-dom";
 
 export const ListUser = () => {
   const [state] = useContext(UserLoginContext);
@@ -21,9 +22,9 @@ export const ListUser = () => {
         {
           withCredentials: true,
           headers: {
-              'Content-Type': 'application/json'
-          }
-      }
+            "Content-Type": "application/json",
+          },
+        }
       );
       const data = await fetch.data.UserData;
       setUserList(data);
@@ -66,7 +67,7 @@ export const ListUser = () => {
   ];
 
   if (!state.user.isAdmin) {
-    return <div>Access Denied !!</div>;
+    return <Navigate to="/403" />;
   }
 
   return (

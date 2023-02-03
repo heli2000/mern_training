@@ -21,6 +21,7 @@ export const UpdateUser = (props) => {
                 `${process.env.REACT_APP_API_URL}editUser`,
                 JSON.stringify({ ...values }),
                 {
+                  withCredentials: true,
                   headers: {
                     "Content-Type": "application/json",
                     "Access-Control-Allow-Origin": "*",

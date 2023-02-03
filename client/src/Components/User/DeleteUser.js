@@ -9,6 +9,7 @@ export const DeleteUser = (props) => {
       `${process.env.REACT_APP_API_URL}deleteUser`,
       JSON.stringify({ id: props.id }),
       {
+        withCredentials: true,
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",

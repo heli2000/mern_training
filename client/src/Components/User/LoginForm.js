@@ -4,19 +4,13 @@ import * as Yup from "yup";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { UserLoginContext } from "../Provider/UserLoginProvider";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const LoginForm = () => {
   const [state, dispatch] = useContext(UserLoginContext);
-  const navigate = useNavigate();
-
-  // if(state.user._id !== null){
-  //   return <Navigate to="/"/>
-  // }
-
+  const navigate = useNavigate()
   return (
     <div>
-      {/* {JSON.stringify(state)} */}
       <div className="container-login100 bgimg">
         <div className="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30">
           <Formik
@@ -37,18 +31,15 @@ export const LoginForm = () => {
                       "Access-Control-Allow-Origin": "*",
                     },
                   },
-                  // {
-                  //   withCredentials: true,
-                  // }
                 );
                 
                 const data = await fetch.data;
-                // console.log(Cookies.get('mernsession'));
                 if (Object.keys(data).length > 1) {
                   dispatch({
                     type: "updateUserLoginInfo",
                     payload: { user: { ...data.userData[0] } },
                   });
+                  navigate("/")
                 } else {
                   Swal.fire("", data.message, "error");
                 }
@@ -70,9 +61,6 @@ export const LoginForm = () => {
                   placeholder="username or email"
                 />
                 <span className="focus-input100" />
-                {/* <span>
-                  <ErrorMessage name="name" />
-                </span> */}
               </div>
               <span className="error">
                 <ErrorMessage name="name" />
@@ -88,9 +76,6 @@ export const LoginForm = () => {
                   placeholder="password"
                 />
                 <span className="focus-input100" />
-                {/* <span>
-                  <ErrorMessage name="pass" />
-                </span> */}
               </div>
               <span className="error">
                 <ErrorMessage name="pass" />
