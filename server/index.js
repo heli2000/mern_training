@@ -16,12 +16,13 @@ app.use(
 
 app.use(cookieParser());
 
+/** httpOnly is set to true because to secure to pass user data to cookie */
 app.use(
   session({
     secret: "thisisverysecret",
     name: "mernsession",
     saveUninitialized: true,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 },
+    cookie: { maxAge: 1000 * 60 * 60 * 24, httpOnly: true },
     resave:false
   })
 );

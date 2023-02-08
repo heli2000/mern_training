@@ -5,10 +5,11 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { UserLoginContext } from "../Provider/UserLoginProvider";
 import { Link, useNavigate } from "react-router-dom";
+import {loginUser} from '../../Services/UserService';
 
 export const LoginForm = () => {
   const [state, dispatch] = useContext(UserLoginContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
     <div>
       <div className="container-login100 bgimg">
@@ -21,17 +22,7 @@ export const LoginForm = () => {
             })}
             onSubmit={async (values, { setSubmitting }) => {
               try {
-                const fetch = await axios.post(
-                  `${process.env.REACT_APP_API_URL}login`,
-                  JSON.stringify({ ...values }),
-                  {
-                    withCredentials: true,
-                    headers: {
-                      "Content-Type": "application/json",
-                      "Access-Control-Allow-Origin": "*",
-                    },
-                  },
-                );
+                const fetch = await loginUser(values);
                 
                 const data = await fetch.data;
                 if (Object.keys(data).length > 1) {

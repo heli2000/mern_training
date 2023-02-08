@@ -1,3 +1,4 @@
+require('dotenv').config();
 const mongoose = require('mongoose');
 mongoose.set("strictQuery", false);
-mongoose.connect("mongodb://localhost:27017/mern_training");
+mongoose.connect(process.env.DATABASE_CONNECTION_URL);

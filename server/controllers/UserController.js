@@ -1,10 +1,13 @@
 const User = require("../models/UserModel");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const createUser = async (req, res) => {
   try {
+    encryptedPassword = await bcrypt.hash(req.body.pass, 10);
     const user = new User({
       name: req.body.name,
-      pass: req.body.pass,
+      pass: encryptedPassword,
       isAdmin: req.body.isAdmin ? req.body.isAdmin : false,
     });
 
@@ -17,14 +20,17 @@ const createUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   try {
-    let result = await User.find(req.body);
-    if (result.length > 0) {
-      if (req.session !== undefined && req.session.user !== undefined) {
-        res.send({ message: "You are already logged in" });
-      } else {
-        req.session.user = req.body.name;
-        res.send({ message: "Login successfully", userData: { ...result } });
-      }
+    let result = await User.find(req.body.email);
+    if (
+      result.length > 0 &&
+      (await bcrypt.compare(req.body.pass, result[0].pass))
+    ) {
+      const token = jwt.sign({ ...req.body }, process.env.TOKEN_SECRET_KEY, {
+        expiresIn: "1d",
+      });
+      req.session.token = token;
+      req.session.user = req.body.name;
+      res.send({ message: "Login successfully", userData: { ...result } });
     } else {
       res.send({ message: "Username or password is incorrect" });
     }
@@ -35,8 +41,8 @@ const loginUser = async (req, res) => {
 
 const listUsers = async (req, res) => {
   try {
-      let result = await User.find({ _id: { $ne: req.query.id } });
-      res.send({ UserData: result });
+    let result = await User.find({ _id: { $ne: req.query.id } });
+    res.send({ UserData: result });
   } catch (error) {
     res.send(error.message);
   }
