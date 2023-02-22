@@ -1,21 +1,11 @@
-import axios from "axios";
 import React from "react";
 import { Button } from "react-bootstrap";
 import Swal from "sweetalert2";
+import UserService from "../../Services/UserService";
 
 export const DeleteUser = (props) => {
   const deleteUser = async () => {
-    const fetch = axios.post(
-      `${process.env.REACT_APP_API_URL}deleteUser`,
-      JSON.stringify({ id: props.id }),
-      {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-      }
-    );
+    const fetch = await UserService.deleteUser(props.id);
     const data = await fetch.data;
     props.setShow(false);
     if (data.message) {

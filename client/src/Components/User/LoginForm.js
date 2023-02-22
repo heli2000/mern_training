@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
 import Swal from "sweetalert2";
 import { UserLoginContext } from "../Provider/UserLoginProvider";
 import { Link, useNavigate } from "react-router-dom";
-import {loginUser} from '../../Services/UserService';
+import UserService from '../../Services/UserService';
 
 export const LoginForm = () => {
   const [state, dispatch] = useContext(UserLoginContext);
@@ -22,8 +21,7 @@ export const LoginForm = () => {
             })}
             onSubmit={async (values, { setSubmitting }) => {
               try {
-                const fetch = await loginUser(values);
-                
+                const fetch = await UserService.loginUser(values);
                 const data = await fetch.data;
                 if (Object.keys(data).length > 1) {
                   dispatch({

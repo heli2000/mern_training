@@ -3,7 +3,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
 import { Button } from "react-bootstrap";
-import axios from "axios";
+import UserService from "../../Services/UserService";
 
 export const UpdateUser = (props) => {
 
@@ -17,17 +17,7 @@ export const UpdateUser = (props) => {
           })}
           onSubmit={async (values) => {
             try {
-              const fetch = await axios.post(
-                `${process.env.REACT_APP_API_URL}editUser`,
-                JSON.stringify({ ...values }),
-                {
-                  withCredentials: true,
-                  headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*",
-                  },
-                }
-              );
+              const fetch = await UserService.updateUser({...values});
               const data = await fetch.data;
               props.setShow(false);
               if (data.message) {

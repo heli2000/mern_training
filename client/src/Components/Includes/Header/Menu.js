@@ -7,12 +7,12 @@ import MernImg from '../../../Images/mern.png';
 import { Login } from "../../User/Login";
 
 export const Menu = () => {
-  const [state, dispatch] = useContext(UserLoginContext);
+  const [state,] = useContext(UserLoginContext);
   
   return (
     <>
       <ul className="menu-items">
-        <img src={MernImg} className="menu-img"/>
+        <img src={MernImg} className="menu-img" alt="mern"/>
         <li><Link to="/">Home</Link></li>
         {state.user.isAdmin && <li><Link to="/user-list">Users</Link></li>}
         {state.user.name === null ? <Login/>:<Logout/>}

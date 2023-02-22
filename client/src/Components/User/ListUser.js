@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { UserLoginContext } from "../Provider/UserLoginProvider";
 import DataTable from "react-data-table-component";
@@ -7,6 +6,7 @@ import { BootstrapModal } from "../Modal/BootstrapModal";
 import { UpdateUser } from "./UpdateUser";
 import { DeleteUser } from "./DeleteUser";
 import { Navigate } from "react-router-dom";
+import UserService from "../../Services/UserService";
 
 export const ListUser = () => {
   const [state] = useContext(UserLoginContext);
@@ -17,15 +17,7 @@ export const ListUser = () => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const fetch = await axios.get(
-        `${process.env.REACT_APP_API_URL}listUser?id=${state.user._id}`,
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const fetch = await UserService.listUser(state.user._id);
       const data = await fetch.data.UserData;
       setUserList(data);
     };

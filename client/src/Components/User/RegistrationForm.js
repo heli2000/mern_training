@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { UserLoginContext } from "../Provider/UserLoginProvider";
 import { Navigate, useNavigate } from "react-router-dom";
+import UserService from "../../Services/UserService";
 
 export const RegistrationForm = () => {
   const [state] = useContext(UserLoginContext);
@@ -32,18 +32,9 @@ export const RegistrationForm = () => {
                 ),
               }),
             })}
-            onSubmit={async (values, { setSubmitting }) => {
+            onSubmit={async (values) => {
               try {
-                const fetch = await axios.post(
-                  `${process.env.REACT_APP_API_URL}register`,
-                  JSON.stringify({ ...values }),
-                  {
-                    headers: {
-                      "Content-Type": "application/json",
-                      "Access-Control-Allow-Origin": "*",
-                    },
-                  }
-                );
+                const fetch = await UserService.registerUser({...values});
                 const data = await fetch.data;
                 Swal.fire("", data.message, "success");
                 navigate("/");
