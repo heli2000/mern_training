@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { UserLoginContext } from "../Provider/UserLoginProvider";
+import React from "react";
 import { CarouselImage } from "./CarouselImage";
 import "../../CSS/HomePage.css";
 

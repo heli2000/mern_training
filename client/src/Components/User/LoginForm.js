@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import UserService from '../../Services/UserService';
 
 export const LoginForm = () => {
-  const [state, dispatch] = useContext(UserLoginContext);
+  const [, dispatch] = useContext(UserLoginContext);
   const navigate = useNavigate();
   return (
     <div>

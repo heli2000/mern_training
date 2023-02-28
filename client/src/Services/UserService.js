@@ -1,15 +1,19 @@
 import axios from "axios";
 
+const header = {
+  headers: {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+  },
+};
+
 const loginUser = async (values) => {
   return await axios.post(
     `${process.env.REACT_APP_API_URL}login`,
     JSON.stringify({ ...values }),
     {
       withCredentials: true,
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
+      ...header
     }
   );
 };
@@ -20,10 +24,7 @@ const deleteUser = async (id) => {
     JSON.stringify({ id: id }),
     {
       withCredentials: true,
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
+      ...header
     }
   );
 };
@@ -31,18 +32,14 @@ const deleteUser = async (id) => {
 const listUser = async (id) => {
   return await axios.get(`${process.env.REACT_APP_API_URL}listUser?id=${id}`, {
     withCredentials: true,
-    headers: {
-      "Content-Type": "application/json",
-    },
+    ...header
   });
 };
 
 const logoutUser = async () => {
   return await axios.get(`${process.env.REACT_APP_API_URL}logout`, {
     withCredentials: true,
-    headers: {
-      "Content-Type": "application/json",
-    },
+    ...header
   });
 };
 
@@ -51,10 +48,7 @@ const registerUser = async (values) => {
     `${process.env.REACT_APP_API_URL}register`,
     JSON.stringify({ ...values }),
     {
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
+      ...header
     }
   );
 };
@@ -65,10 +59,7 @@ const updateUser = async (values) => {
     JSON.stringify({ ...values }),
     {
       withCredentials: true,
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
+      ...header
     }
   );
 };
@@ -79,7 +70,7 @@ const UserService = {
   listUser,
   logoutUser,
   registerUser,
-  updateUser
+  updateUser,
 };
 
 export default UserService;

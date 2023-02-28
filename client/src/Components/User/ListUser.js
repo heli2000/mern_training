@@ -18,6 +18,7 @@ export const ListUser = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       const fetch = await UserService.listUser(state.user._id);
+      console.log(fetch.data);
       const data = await fetch.data.UserData;
       setUserList(data);
     };
